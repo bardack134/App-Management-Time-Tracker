@@ -46,6 +46,9 @@ def ask_task():
 
 #TODO: AL OPRIMIR EL BOTON PLAY, EMPEZAR A CALCULAR EL TIEMPO DE INICIO DEL PROYECTO
 def start_time():
+    #convierto task_get en variable Global para usarla en otras funciones
+    global task_get
+    
     # Selecciona un ítem de la lista (el que esté seleccionado en ese momento), al oprimir el boton play
     task_get=task_list.get(ANCHOR).capitalize()
     
@@ -56,10 +59,10 @@ def start_time():
     current_time=datetime.datetime.now()
     
     # Formatea la hora actual en el formato de 12 horas con AM/PM
-    formatted_time=current_time.strftime("%I:%M:%S:%p")
+    start_time=current_time.strftime("%I:%M:%S:%p")
     
     # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
-    data=f"The user started the task '{task_get}'at the time {formatted_time}"
+    data = f"'{task_get}' started at {start_time}"
     
     # Imprime en consola la cadena de texto creada
     print(data)
@@ -80,6 +83,24 @@ def start_time():
     duration_report.insert(INSERT, data)
     
   
+#TODO: FUNCION PARA SABER LA HORA A LA HORA DE OPRIMIR EL BOTON "STOP" 
+
+def stop():
+    # Obtiene la hora actual
+    current_time=datetime.datetime.now()
+    
+    # Formatea la hora actual en el formato de 12 horas con AM/PM
+    stop_time=current_time.strftime("%I:%M:%S:%p")      
+    
+    # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
+    data = f"'\n{task_get}' started at {stop_time}"
+    
+    # Inserta la cadena de texto creada en el widget "duration_report"
+    duration_report.insert(INSERT, data)
+    
+    #calculando el tiempo que duro la seccion de proyecto
+    
+    
 #TODO: TITULO DE LA APP, BOTON AGREGAR TAREA, LISTA DE TAREAS, BOTON DE "PLAY"
 #Titulo
 # creamos un Frame con un color de fondo azul y lo expandimos para que ocupe toda la fila.
@@ -108,7 +129,7 @@ add_task.pack()
 
 
 #Lista de tareas
-task_list=Listbox(width=20, font=("Arial", 13, "bold") )
+task_list=Listbox(width=15, font=("Arial", 13, "bold") )
 task_list.grid(row=2, column=0,  pady=5)
 
 
@@ -118,16 +139,18 @@ play_button.grid(row=3, column=0, pady=5)
 
 
 #boton de "ver informe de duracion"
-report_button=Button(window, text="Duration Report")
-report_button.grid(row=3, column=1, pady=5)
+stop_button=Button(window, text="Stop Project", command=stop)
+stop_button.grid(row=3, column=1, pady=5)
+
 
 
 #TODO: CREANDO TEXT WIDGET PARA MOSTRAR INFORMACION AL USER DEL TIEMPO DE DURACION DE CADA TAREA
-duration_report=Text(window, bg=PEACH, width=60,height=40)
+duration_report=Text(window, bg=PEACH, width=30,height=20, font=("Arial", 13))
                                    
 duration_report.grid(row=2, column=1, padx=15)
                         
                         
+
 
 
 
