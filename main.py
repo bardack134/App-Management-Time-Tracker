@@ -83,7 +83,7 @@ def start_time():
         start_time=current_time.strftime("%I:%M:%S:%p")
         
         # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
-        data = f"'{task_get}' started at {start_time}"
+        data = f"{start_time} started '{task_get}'  "
         
         # Imprime en consola la cadena de texto creada
         print(data)
@@ -138,7 +138,7 @@ def stop():
         stop_time=current_time.strftime("%I:%M:%S:%p")      
         
         # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
-        data = f"'\n'{task_get}' ended at {stop_time}"
+        data = f"'\n{stop_time} ended '{task_get}' "
         
         # Inserta la cadena de texto creada en el widget "duration_report"
         duration_report.insert(INSERT, data)
