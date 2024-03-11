@@ -111,7 +111,7 @@ def stop():
     stop_time=current_time.strftime("%I:%M:%S:%p")      
     
     # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
-    data = f"'\n{task_get}' ended at {stop_time}"
+    data = f"'\n'{task_get}' ended at {stop_time}"
     
     # Inserta la cadena de texto creada en el widget "duration_report"
     duration_report.insert(INSERT, data)
@@ -135,7 +135,7 @@ def stop():
     total_hours=start_hour-end_hour
     total_minutes=start_minute-end_minute
     total_seconds=start_seconds-end_seconds
-    total_time=f"\nSession duration: {abs((total_hours))} h, {abs((total_minutes))} min, {abs((total_seconds))} s\n"
+    total_time=f"\n'{task_get}' Session duration: {abs((total_hours))} h, {abs((total_minutes))} min, {abs((total_seconds))} s\n"
     
     #calculando el tiempo total empleado hasta hora en todas las sessiones
     overall_hours += total_hours
@@ -147,9 +147,12 @@ def stop():
     duration_report.insert(INSERT, total_time)
     duration_report.insert(INSERT, overall_time)
     
+
+#TODO: FUNCION QUE RESETEA EL TEXTO WIDGET COMO LOS TIEMPOS
+
+
     
 #TODO: TITULO DE LA APP, BOTON AGREGAR TAREA, LISTA DE TAREAS, BOTON DE "PLAY"
-#Titulo
 # creamos un Frame con un color de fondo azul y lo expandimos para que ocupe toda la fila.
 title_frame=Frame(window, bg=BLUE)
 
@@ -180,16 +183,25 @@ task_list=Listbox(width=15, font=("Arial", 13, "bold") )
 task_list.grid(row=2, column=0,  pady=5)
 
 
-#boton de play
-play_button=Button(window, text="Play", command=start_time)
-play_button.grid(row=3, column=0, pady=5)
+#TODO: CREANDO FRAME PARA PONER LOS BOTONES INFERIOES
+bottom_buttons_frame=Frame(window, bg=BEIGE)
+# 'ew' hace que el frame se expanda horizontalmente, el widget se adhiere a los lados este y oeste de la celda.
+bottom_buttons_frame.grid(row=3, column=0, sticky='ew', columnspan=4, pady=5)
 
+#empaquetamos los botones inferioes en el frame botton_buttons_frame
+
+#boton de play
+play_button=Button(bottom_buttons_frame, text="Play", command=start_time)
+play_button.grid(row=0, column=0, padx=30, pady=5)
+# play_button.pack()
 
 #boton de "ver informe de duracion"
-stop_button=Button(window, text="Stop Project", command=stop)
-stop_button.grid(row=3, column=1, pady=5)
+stop_button=Button(bottom_buttons_frame, text="Stop Project", command=stop)
+stop_button.grid(row=0, column=2, padx=30, pady=5)
 
-
+#boton de resetar la informacion del 'text widget'
+reset_button=Button(bottom_buttons_frame, text="Reset", command=reset)
+reset_button.grid(row=0, column=3, padx=30, pady=5)
 
 #TODO: CREANDO TEXT WIDGET PARA MOSTRAR INFORMACION AL USER DEL TIEMPO DE DURACION DE CADA TAREA
 duration_report=Text(window, bg=PEACH, width=40,height=20, font=("Arial", 13))
