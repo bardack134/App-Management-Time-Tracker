@@ -197,12 +197,7 @@ def export():
 
     # Abre un cuadro de diálogo para guardar un archivo con la extensión predeterminada '.txt'
     file=asksaveasfile(defaultextension='.txt')
-    
-    # Obtiene el contenido del widget 'duration_report' desde el inicio ('1.0') hasta el final ('end')
 
-    file=asksaveasfile(defaultextension='.txt')
-    
-    # msg="mensaje de prueba"
     
     # Obtiene el contenido del widget 'duration_report' desde el inicio ('1.0') hasta el final ('end')
     text_widget_data=duration_report.get("1.0", "end")
