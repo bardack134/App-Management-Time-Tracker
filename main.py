@@ -57,9 +57,7 @@ def ask_task():
 def start_time():
     #convierto task_get, start_hour, start_minute, start_second en variables Globales para usarlas en otras funciones
     global task_get
-    global start_hour
-    global start_minute
-    global start_seconds
+    global first_time
     global running        
     # Selecciona un ítem de la lista (el que esté seleccionado en ese momento), al oprimir el boton play
     task_get=task_list.get(ANCHOR).capitalize()
@@ -77,10 +75,10 @@ def start_time():
         print(f'the selected item by the user is {task_get}')
         
         # Obtiene la hora actual
-        current_time=datetime.datetime.now()
+        first_time=datetime.datetime.now()
         
         # Formatea la hora actual en el formato de 12 horas con AM/PM
-        start_time=current_time.strftime("%I:%M:%S:%p")
+        start_time=first_time.strftime("%I:%M:%S:%p")
         
         # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
         data = f"{start_time} started '{task_get}'  "
@@ -90,19 +88,19 @@ def start_time():
         
         
         # Imprime en consola la hora de inicio del proyecto (en formato de 24 horas), para hacer los calculos matematicos mas facilmente
-        start_hour=int((current_time.strftime("%H")))
-        print(type(start_hour))
-        print(start_hour)
+        # start_hour=int((current_time.strftime("%H")))
+        # print(type(start_hour))
+        # print(start_hour)
         
-        # Imprime en consola el minuto de inicio del proyecto
-        start_minute=int((current_time.strftime("%M")))
-        print(type(start_minute))
-        print(start_minute)
+        # # Imprime en consola el minuto de inicio del proyecto
+        # start_minute=int((current_time.strftime("%M")))
+        # print(type(start_minute))
+        # print(start_minute)
         
-        # Imprime en consola los segundos  de inicio del proyecto
-        start_seconds=int((current_time.strftime("%S")))
-        print(type(start_seconds))
-        print(start_seconds)
+        # # Imprime en consola los segundos  de inicio del proyecto
+        # start_seconds=int((current_time.strftime("%S")))
+        # print(type(start_seconds))
+        # print(start_seconds)
         
         # Cambia el texto del botón "play" a "Project Running"
         play_button.config( text="Project Running")
@@ -132,10 +130,10 @@ def stop():
         play_button.config( text="Play")
         
         # Obtiene la hora actual
-        current_time=datetime.datetime.now()
+        later_time=datetime.datetime.now()
         
         # Formatea la hora actual en el formato de 12 horas con AM/PM
-        stop_time=current_time.strftime("%I:%M:%S:%p")      
+        stop_time=later_time.strftime("%I:%M:%S:%p")      
         
         # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
         data = f"'\n{stop_time} ended '{task_get}' "
@@ -144,30 +142,28 @@ def stop():
         duration_report.insert(INSERT, data)
         
         # Imprime en consola la hora actual (en formato de 24 horas), para hacer los calculos matematicos mas facilmente
-        end_hour=int((current_time.strftime("%H")))
-        print(type(end_hour))
-        print(end_hour)
         
-        # Imprime en consola los minutos actuales
-        end_minute=int((current_time.strftime("%M")))
-        print(type(end_minute))
-        print(end_minute)
+        # Calcular la diferencia de tiempo entre 'later_time' y 'first_time'
+        total_time=later_time-first_time
         
-        # Imprime en consola los segundos actuales
-        end_seconds=int((current_time.strftime("%S")))
-        print(type(end_seconds))
-        print(end_seconds)
         
-        #calculando el tiempo que duro la seccion de proyecto
-        total_hours=start_hour-end_hour
-        total_minutes=start_minute-end_minute
-        total_seconds=start_seconds-end_seconds
-        total_time=f"\n'{task_get}' Session duration: {abs((total_hours))} h, {abs((total_minutes))} min, {abs((total_seconds))} s\n"
+        # Dividir los segundos totales por 3600 para obtener las horas completas
+        hours=total_time.seconds //3600
         
-        #calculando el tiempo total empleado hasta hora en todas las sessiones
-        overall_hours += total_hours
-        overall_minutes += total_minutes
-        overall_seconds += total_seconds
+        # Dividir los segundos totales por 60 para obtener los minutos totales,
+        # yluego usar % 60 para obtener los minutos más allá de las horas completas
+        minutes =(total_time.seconds //60)%60
+        
+        # Usar % 60 para obtener los segundos que no completan un minuto
+        seconds=total_time.seconds%60
+        
+        
+        total_time=f"\n'{task_get}' Session duration: {abs((hours))} h, {abs((minutes))} min, {abs((seconds))} s\n"
+        
+        # #calculando el tiempo total empleado hasta hora en todas las sessiones
+        overall_hours += hours
+        overall_minutes += minutes
+        overall_seconds += seconds
         overall_time=f"\n***Total Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"     
         
         #muestro el tiempo total empleado en la tarea al usuario en el widget "duration_report"
