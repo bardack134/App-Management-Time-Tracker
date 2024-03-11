@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.filedialog import asksaveasfile
 from tkinter.simpledialog import askstring
 import datetime
 
@@ -154,12 +155,23 @@ def reset():
     global overall_minutes
     global overall_seconds
     
-    #poniendo los varoles en cero nuevamente
+    # Resetea las variables globales a cero, Estas variables almacenan el tiempo total transcurrido
     overall_hours = 0
     overall_minutes = 0
     overall_seconds = 0
 
+    # Borra todo el contenido del widget 'duration_report', '1.0' indica el inicio del texto y 'end' indica el final del texto
     duration_report.delete("1.0", "end")
+    
+    
+#TODO: FUNCION QUE EXPORTA LA INFORMACION DEL   TEXTO WIDGER A .TXT FILE
+def export():
+    file=asksaveasfile(defaultextension='.txt')
+    
+    # msg="mensaje de prueba"
+    text_widget_data=duration_report.get("1.0", "end")
+    file.write(text_widget_data)
+
     
 #TODO: TITULO DE LA APP, BOTON AGREGAR TAREA, LISTA DE TAREAS, BOTON DE "PLAY"
 # creamos un Frame con un color de fondo azul y lo expandimos para que ocupe toda la fila.
@@ -200,17 +212,22 @@ bottom_buttons_frame.grid(row=3, column=0, sticky='ew', columnspan=4, pady=5)
 #empaquetamos los botones inferioes en el frame botton_buttons_frame
 
 #boton de play
-play_button=Button(bottom_buttons_frame, text="Play", command=start_time)
+play_button=Button(bottom_buttons_frame, text="Play", bg="white", relief=GROOVE, command=start_time)
 play_button.grid(row=0, column=0, padx=30, pady=5)
 # play_button.pack()
 
 #boton de "ver informe de duracion"
-stop_button=Button(bottom_buttons_frame, text="Stop Project", command=stop)
+stop_button=Button(bottom_buttons_frame, text="Stop Project", bg="white", relief=GROOVE, command=stop)
 stop_button.grid(row=0, column=2, padx=30, pady=5)
 
 #boton de resetar la informacion del 'text widget'
-reset_button=Button(bottom_buttons_frame, text="Reset", command=reset)
+reset_button=Button(bottom_buttons_frame, text="Reset", bg="white", relief=GROOVE, command=reset)
 reset_button.grid(row=0, column=3, padx=30, pady=5)
+
+
+#boton de exportar la informacion del 'text widget' a tipo .TXT file
+export_information=Button(bottom_buttons_frame, text="Export information", bg="white", relief=GROOVE, command=export)
+export_information.grid(row=0, column=4, padx=30, pady=5)
 
 #TODO: CREANDO TEXT WIDGET PARA MOSTRAR INFORMACION AL USER DEL TIEMPO DE DURACION DE CADA TAREA
 duration_report=Text(window, bg=PEACH, width=40,height=20, font=("Arial", 13))
