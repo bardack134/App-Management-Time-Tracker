@@ -9,6 +9,9 @@ BLUE="#40A2E3"
 PURPLE="#AD88C6"
 PEACH="#FEECE2"
 index=1
+overall_hours=0
+overall_minutes=0
+overall_seconds=0
 
 
 #TODO: CONFIGURACION DE LA VENTANA
@@ -46,9 +49,12 @@ def ask_task():
 
 #TODO: AL OPRIMIR EL BOTON PLAY, EMPEZAR A CALCULAR EL TIEMPO DE INICIO DEL PROYECTO
 def start_time():
-    #convierto task_get en variable Global para usarla en otras funciones
+    #convierto task_get, start_hour, start_minute, start_second en variables Globales para usarlas en otras funciones
     global task_get
-    
+    global start_hour
+    global start_minute
+    global start_seconds
+            
     # Selecciona un ítem de la lista (el que esté seleccionado en ese momento), al oprimir el boton play
     task_get=task_list.get(ANCHOR).capitalize()
     
@@ -67,14 +73,21 @@ def start_time():
     # Imprime en consola la cadena de texto creada
     print(data)
     
-    # Imprime en consola la hora actual (en formato de 12 horas)
-    print(current_time.hour-12)
     
-    # Imprime en consola los minutos actuales
-    print(current_time.minute)
+    # Imprime en consola la hora de inicio del proyecto (en formato de 24 horas), para hacer los calculos matematicos mas facilmente
+    start_hour=int((current_time.strftime("%H")))
+    print(type(start_hour))
+    print(start_hour)
     
-    # Imprime en consola los segundos actuales
-    print(current_time.second)
+    # Imprime en consola el minuto de inicio del proyecto
+    start_minute=int((current_time.strftime("%M")))
+    print(type(start_minute))
+    print(start_minute)
+    
+    # Imprime en consola los segundos  de inicio del proyecto
+    start_seconds=int((current_time.strftime("%S")))
+    print(type(start_seconds))
+    print(start_seconds)
     
     # Cambia el texto del botón "play" a "Project Running"
     play_button.config( text="Project Running")
@@ -86,6 +99,11 @@ def start_time():
 #TODO: FUNCION PARA SABER LA HORA A LA HORA DE OPRIMIR EL BOTON "STOP" 
 
 def stop():
+    #declartando variables glopbales que usare dentro de la session
+    global overall_hours
+    global overall_minutes
+    global overall_seconds
+    
     # Obtiene la hora actual
     current_time=datetime.datetime.now()
     
@@ -93,12 +111,41 @@ def stop():
     stop_time=current_time.strftime("%I:%M:%S:%p")      
     
     # Crea una cadena de texto con la tarea seleccionada y la hora de inicio
-    data = f"'\n{task_get}' started at {stop_time}"
+    data = f"'\n{task_get}' ended at {stop_time}"
     
     # Inserta la cadena de texto creada en el widget "duration_report"
     duration_report.insert(INSERT, data)
     
+    # Imprime en consola la hora actual (en formato de 24 horas), para hacer los calculos matematicos mas facilmente
+    end_hour=int((current_time.strftime("%H")))
+    print(type(end_hour))
+    print(end_hour)
+    
+    # Imprime en consola los minutos actuales
+    end_minute=int((current_time.strftime("%M")))
+    print(type(end_minute))
+    print(end_minute)
+    
+    # Imprime en consola los segundos actuales
+    end_seconds=int((current_time.strftime("%S")))
+    print(type(end_seconds))
+    print(end_seconds)
+    
     #calculando el tiempo que duro la seccion de proyecto
+    total_hours=start_hour-end_hour
+    total_minutes=start_minute-end_minute
+    total_seconds=start_seconds-end_seconds
+    total_time=f"\nSession duration: {abs((total_hours))} h, {abs((total_minutes))} min, {abs((total_seconds))} s\n"
+    
+    #calculando el tiempo total empleado hasta hora en todas las sessiones
+    overall_hours += total_hours
+    overall_minutes += total_minutes
+    overall_seconds += total_seconds
+    overall_time=f"\nTotal Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"     
+    
+    #muestro el tiempo total empleado en la tarea al usuario en el widget "duration_report"
+    duration_report.insert(INSERT, total_time)
+    duration_report.insert(INSERT, overall_time)
     
     
 #TODO: TITULO DE LA APP, BOTON AGREGAR TAREA, LISTA DE TAREAS, BOTON DE "PLAY"
@@ -145,8 +192,7 @@ stop_button.grid(row=3, column=1, pady=5)
 
 
 #TODO: CREANDO TEXT WIDGET PARA MOSTRAR INFORMACION AL USER DEL TIEMPO DE DURACION DE CADA TAREA
-duration_report=Text(window, bg=PEACH, width=30,height=20, font=("Arial", 13))
-                                   
+duration_report=Text(window, bg=PEACH, width=40,height=20, font=("Arial", 13))
 duration_report.grid(row=2, column=1, padx=15)
                         
                         
