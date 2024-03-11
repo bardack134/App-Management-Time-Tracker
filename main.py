@@ -141,7 +141,7 @@ def stop():
     overall_hours += total_hours
     overall_minutes += total_minutes
     overall_seconds += total_seconds
-    overall_time=f"\nTotal Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"     
+    overall_time=f"\n***Total Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"     
     
     #muestro el tiempo total empleado en la tarea al usuario en el widget "duration_report"
     duration_report.insert(INSERT, total_time)
@@ -149,8 +149,17 @@ def stop():
     
 
 #TODO: FUNCION QUE RESETEA EL TEXTO WIDGET COMO LOS TIEMPOS
+def reset():
+    global overall_hours
+    global overall_minutes
+    global overall_seconds
+    
+    #poniendo los varoles en cero nuevamente
+    overall_hours = 0
+    overall_minutes = 0
+    overall_seconds = 0
 
-
+    duration_report.delete("1.0", "end")
     
 #TODO: TITULO DE LA APP, BOTON AGREGAR TAREA, LISTA DE TAREAS, BOTON DE "PLAY"
 # creamos un Frame con un color de fondo azul y lo expandimos para que ocupe toda la fila.
