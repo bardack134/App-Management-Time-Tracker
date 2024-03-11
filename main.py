@@ -14,9 +14,9 @@ PURPLE="#AD88C6"
 PEACH="#FEECE2"
 ORANGE="#FFCF96"
 index=1
-overall_hours=0
-overall_minutes=0
+#variable donde se hiran almacenando la duracion en segundos de las secciones
 overall_seconds=0
+
 #esta variable comprobara que el "start time" haya sido chequiado
 running=False
 
@@ -113,8 +113,6 @@ def start_time():
 
 def stop():
     #declartando variables glopbales que usare dentro de la session
-    global overall_hours
-    global overall_minutes
     global overall_seconds
     global running
     #mostrar error en pantalla en caso de que el usuario de click a 'play' sin seleccionar una tarea
@@ -146,27 +144,36 @@ def stop():
         # Calcular la diferencia de tiempo entre 'later_time' y 'first_time'
         total_time=later_time-first_time
         
+        #obtengo esa diferencia de tiempo en segundos 
+        total_seconds=total_time.total_seconds()
+        
+        #  conviertimos el número de punto flotante "x ejemplo 3.707691" a un número entero 3, cortando la parte decimal.
+        total_seconds_as_integer = int(total_seconds)
         
         # Dividir los segundos totales por 3600 para obtener las horas completas
-        hours=total_time.seconds //3600
+        hours=total_seconds_as_integer //3600
         
         # Dividir los segundos totales por 60 para obtener los minutos totales,
         # yluego usar % 60 para obtener los minutos más allá de las horas completas
-        minutes =(total_time.seconds //60)%60
+        minutes =(total_seconds_as_integer //60)%60
         
         # Usar % 60 para obtener los segundos que no completan un minuto
-        seconds=total_time.seconds%60
-        
-        
+        seconds=total_seconds_as_integer%60
+                        
         total_time=f"\n'{task_get}' Session duration: {abs((hours))} h, {abs((minutes))} min, {abs((seconds))} s\n"
         
-        # #calculando el tiempo total empleado hasta hora en todas las sessiones
-        overall_hours += hours
-        overall_minutes += minutes
-        overall_seconds += seconds
-        overall_time=f"\n***Total Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"     
+        # #calculando el tiempo total empleado hasta hora en todas las sessiones en segundos
         
-        #muestro el tiempo total empleado en la tarea al usuario en el widget "duration_report"
+        overall_seconds += total_seconds_as_integer
+         
+        
+        #pasando  el tiempo de todas las sesiones en segundos a formato horas:minutos:segundos
+        overall_hours=overall_seconds //3600                
+        overall_minutes =(overall_seconds //60)%60
+        overall_seconds=overall_seconds%60
+        
+        overall_time=f"\n***Total Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"   
+         
         duration_report.insert(INSERT, total_time)
         duration_report.insert(INSERT, overall_time)
     
