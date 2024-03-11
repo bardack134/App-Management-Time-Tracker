@@ -1,8 +1,7 @@
 from tkinter import *
-<<<<<<< HEAD
+
 from tkinter import messagebox
-=======
->>>>>>> bac1a50285f1aa63923e14f0342a16e8c6bccb1a
+
 from tkinter.filedialog import asksaveasfile
 from tkinter.simpledialog import askstring
 import datetime
@@ -195,16 +194,17 @@ def reset():
     
 #TODO: FUNCION QUE EXPORTA LA INFORMACION DEL   TEXTO WIDGER A .TXT FILE
 def export():
-<<<<<<< HEAD
+
     # Abre un cuadro de diálogo para guardar un archivo con la extensión predeterminada '.txt'
     file=asksaveasfile(defaultextension='.txt')
     
     # Obtiene el contenido del widget 'duration_report' desde el inicio ('1.0') hasta el final ('end')
-=======
+
     file=asksaveasfile(defaultextension='.txt')
     
     # msg="mensaje de prueba"
->>>>>>> bac1a50285f1aa63923e14f0342a16e8c6bccb1a
+    
+    # Obtiene el contenido del widget 'duration_report' desde el inicio ('1.0') hasta el final ('end')
     text_widget_data=duration_report.get("1.0", "end")
     file.write(text_widget_data)
 
@@ -257,11 +257,11 @@ stop_button=Button(bottom_buttons_frame, text="Stop Project", bg="white", relief
 stop_button.grid(row=0, column=2, padx=30, pady=5)
 
 #boton de resetar la informacion del 'text widget'
-<<<<<<< HEAD
+
 reset_button=Button(bottom_buttons_frame, text="Reset", bg=ORANGE, relief=GROOVE, command=reset)
-=======
+
 reset_button=Button(bottom_buttons_frame, text="Reset", bg="white", relief=GROOVE, command=reset)
->>>>>>> bac1a50285f1aa63923e14f0342a16e8c6bccb1a
+
 reset_button.grid(row=0, column=3, padx=30, pady=5)
 
 
