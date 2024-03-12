@@ -170,9 +170,9 @@ def stop():
         #pasando  el tiempo de todas las sesiones en segundos a formato horas:minutos:segundos
         overall_hours=overall_seconds //3600                
         overall_minutes =(overall_seconds //60)%60
-        overall_seconds=overall_seconds%60
+        remaining_seconds=overall_seconds%60
         
-        overall_time=f"\n***Total Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((overall_seconds))} s\n \n"   
+        overall_time=f"\n***Total Report: {abs((overall_hours))} h, {abs((overall_minutes))} min, {abs((remaining_seconds))} s\n \n"   
          
         duration_report.insert(INSERT, total_time)
         duration_report.insert(INSERT, overall_time)
