@@ -33,6 +33,8 @@ The Time Management App is a Python GUI application built using the Tkinter libr
 - Successfully implemented a user-friendly interface for managing project durations.
 - Empowered users to track their time effectively, facilitating better time management practices.
 - Enhanced user productivity and organization by providing features to add, track, and export project duration information.
+
+  
 ![app img 2](https://github.com/bardack134/App-Management-Time-Tracker/assets/142977989/0411add0-aaa0-4abd-b17b-a137ded20d08)
 
 ![app img 1](https://github.com/bardack134/App-Management-Time-Tracker/assets/142977989/899fde38-7489-472d-b5be-e9184b26d997)
